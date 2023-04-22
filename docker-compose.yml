@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+
+  postgres:
+    image: postgres:12.6
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=users
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+
+  pokemon-service-boot:
+    build:
+      context: "."
+      dockerfile: boot.Dockerfile
+    depends_on:
+      - "postgres"
+    ports:
+      - "9000:9000"
+    links:
+      - "postgres"
+
+  pokemon-service-importer:
+    build:
+      context: "."
+      dockerfile: importer.Dockerfile
+    depends_on:
+      - "postgres"
+    links:
+      - "postgres"

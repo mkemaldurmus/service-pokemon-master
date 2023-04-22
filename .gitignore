@@ -1,0 +1,13 @@
+.*
+!.gitignore
+!.editorconfig
+!.scalafmt.conf
+
+logs
+target
+/.idea_modules
+/.classpath
+/.project
+/.bsp
+/.settings
+/RUNNING_PID
